@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Perrito</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/Codeblock.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="background: rgb(0,0,0);">
+    <p class="text-center" style="margin-top: 50px;font-size: 39px;padding-top: 20px;padding-bottom: 20px;background: var(--bs-gray-200);">Estas viendo un perrito!</p>
+    <p style="color: rgb(242,242,242);font-size: 22px;text-align: center;"><br>La foto de abajo es actualizada cada minuto de forma aleatoria utilizando el API y un Cron Job.</p>
+    <p style="color: rgb(242,242,242);font-size: 18px;text-align: center;margin-bottom: 0px;margin-top: 34px;">La dirección de la API es:</p>
+    <p style="color: rgb(255,255,255);text-align: center;"><a href="https://dog.ceo/api/breeds/image/random">https://dog.ceo/api/breeds/image/random</a><br><br></p><img style="width: 50%;margin-left: 25%;max-height: 500px;" src="perrito.jpg?v=<?php echo Date(&quot;Y.m.d.G.i.s&quot;)?>">
+    <p style="margin-top: 50px;margin-left: 10%;color: rgb(210,210,210);background: var(--bs-green);max-width: 80%;">Código de Python utilizado:<pre class="codeblock">
+<code>
+    <span style="color: #000">
+    import os
+    import json
+    import requests
+    
+    #resultado = {}
+    resultado = os.popen("curl https://dog.ceo/api/breeds/image/random 2>/dev/null").read()
+    diccionario = json.loads(resultado)
+    url = diccionario["message"].replace('\\', '')
+    r = requests.get(url, allow_redirects=True)
+    open('/var/www/html/perrito.jpg', 'wb').write(r.content)
+    </span>
+</pre></code></p>
+    <p style="margin-top: 50px;margin-left: 10%;color: rgb(210,210,210);background: var(--bs-green);max-width: 80%;">Configuración del CronJob:<pre class="codeblock">
+<code>
+    <span style="color: #000">
+    import os
+    import json
+    import requests
+
+    #os.system('cls')
+    os.system('clear')
+    resultado = {}
+    resultado = os.popen("curl https://dog.ceo/api/breeds/image/random 2>/dev/null").read()
+    diccionario = json.loads(resultado)
+    url = diccionario["message"].replace('\\', '')
+    r = requests.get(url, allow_redirects=True)
+    open('/var/www/html/perrito.jpg', 'wb').write(r.content)
+    </span>
+</pre></code></p>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
